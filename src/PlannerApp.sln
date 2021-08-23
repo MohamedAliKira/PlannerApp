@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlannerApp", "PlannerApp\Pl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlannerApp.Shared", "PlannerApp.Shared\PlannerApp.Shared.csproj", "{19CA5629-6AE8-4418-8950-16FA34BB880F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlannerApp.Client.Services", "PlannerApp.Client.Services\PlannerApp.Client.Services.csproj", "{48EFFF09-B72F-473F-A631-901C4D27B983}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{19CA5629-6AE8-4418-8950-16FA34BB880F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19CA5629-6AE8-4418-8950-16FA34BB880F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CA5629-6AE8-4418-8950-16FA34BB880F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48EFFF09-B72F-473F-A631-901C4D27B983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48EFFF09-B72F-473F-A631-901C4D27B983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48EFFF09-B72F-473F-A631-901C4D27B983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48EFFF09-B72F-473F-A631-901C4D27B983}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
