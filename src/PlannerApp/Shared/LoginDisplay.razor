@@ -5,10 +5,10 @@
 @using System.Security.Claims
 
 <AuthorizeView>
-    <Authorized>
+    <Authorized>        
         <MudMenu FullWidth="true">
             <ActivatorContent>
-                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary">
+                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary" Direction="Direction.Left" OffsetX="true">
                     Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value @context.User.FindFirst(ClaimTypes.Surname).Value !
                 </MudChip>
             </ActivatorContent>
