@@ -27,8 +27,8 @@ namespace PlannerApp.Components
         {
             _isBusy = true;
             _errorMessage = string.Empty;
-
-            var response = await HttpClient.PostAsJsonAsync("​/api/v2​/auth/login", _model);
+            
+            var response = await HttpClient.PostAsJsonAsync("/api/v2/auth/login", _model);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResult>>();
@@ -47,5 +47,7 @@ namespace PlannerApp.Components
 
             _isBusy = false;
         }
+
+        private void RedirectToRegister() => Navigation.NavigateTo("/authentication/register");
     }
 }
