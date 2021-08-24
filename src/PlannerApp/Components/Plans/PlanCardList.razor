@@ -1,0 +1,50 @@
+﻿@namespace PlannerApp.Components
+
+@if (_isBusy)
+{
+<MudGrid Spacing="2">
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+    <MudItem sm="12" md="4" lg="3">
+        <PlanCard IsBusy="_isBusy" />
+    </MudItem>
+</MudGrid>
+}
+else
+{
+    @if (_result != null && _result.Records != null)
+    {
+        <MudGrid Spacing="2">
+            @foreach (var plan in _result.Records)
+            {
+                <MudItem sm="12" md="4" lg="3">
+                    <PlanCard PlanSummary="plan" />
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <h3> No Records ...</h3>
+    }
+}
