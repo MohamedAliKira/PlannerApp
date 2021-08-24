@@ -19,7 +19,7 @@ namespace PlannerApp.Client.Services
         {
             _client = client;
         }
-        public async Task<ApiResponse<PageList<PlanSummary>>> GetPlansAsync(string query = null, int pageNumber = 1, int pageSize = 10)
+        public async Task<ApiResponse<PageList<PlanSummary>>> GetPlansAsync(string query = null, int pageNumber = 1, int pageSize = 12)
         {
             var response = await _client.GetAsync($"/api/v2/plans?query={query}&pageNumber={pageNumber}&pageSize={pageSize}");
             if(response.IsSuccessStatusCode)

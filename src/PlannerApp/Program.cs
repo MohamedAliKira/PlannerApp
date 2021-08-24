@@ -9,7 +9,7 @@ using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
+using System.Text; 
 using System.Threading.Tasks;
 
 namespace PlannerApp
@@ -22,7 +22,7 @@ namespace PlannerApp
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddHttpClient("PlannerApp.Api",client => {
-                client.BaseAddress = new Uri("http://localhost:90");
+                client.BaseAddress = new Uri("https://plannerapp-api.azurewebsites.net/");
             }).AddHttpMessageHandler<AuthorizationMessageHandler>();
                         
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("PlannerApp.Api"));
