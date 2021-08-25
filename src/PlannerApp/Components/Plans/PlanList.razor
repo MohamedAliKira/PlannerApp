@@ -1,7 +1,17 @@
 ﻿@namespace PlannerApp.Components
 
-<MudText Typo="Typo.h4">My Plans</MudText>     
+@*<MudText Typo="Typo.h4">My Plans</MudText>*@
+
+<MudIconButton Icon="@Icons.Material.Filled.GridView" Disabled="_isCardsViewEnabled" OnClick="setCardView" Color="Color.Secondary"></MudIconButton>
+<MudIconButton Icon="@Icons.Material.Filled.TableView" Disabled="@(!_isCardsViewEnabled)" OnClick="setTableView" Color="Color.Secondary"></MudIconButton>
+
 <div class="m-4">
-        @*<PlanCardList FetchPlans="GetPlansAsync" />*@
+    @if (_isCardsViewEnabled)
+    {
+        <PlanCardList FetchPlans="GetPlansAsync" />
+    }
+    else
+    {
         <PlansTable />
-    </div>
+    }
+</div>

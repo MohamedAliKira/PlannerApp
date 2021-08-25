@@ -30,7 +30,7 @@ namespace PlannerApp.Components
             try
             {
                 await AuthenticationService.RegisterUserAsync(_model);
-                Navigation.NavigateTo("/authentication/login");
+                Navigation.NavigateTo("/");
             }
             catch (ApiException ex)
             {
@@ -45,6 +45,6 @@ namespace PlannerApp.Components
 
             _isBusy = false;
         }
-        private void RedirectToLogin() => Navigation.NavigateTo("/authentication/login");
+        private void RedirectToLogin() => Navigation.NavigateTo("/");
     }
 }

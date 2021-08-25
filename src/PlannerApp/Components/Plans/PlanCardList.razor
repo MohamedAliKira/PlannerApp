@@ -1,7 +1,7 @@
 ﻿@namespace PlannerApp.Components
 
 <MudPaper Class="m-4 p-4">
-    <div class="d-flex m-4 p-4">
+    <div class="d-flex">
         <MudTextField @bind-Value="_query" Variant="Variant.Outlined" />
         <MudIconButton Color="Color.Primary" Icon="@Icons.Filled.Search" OnClick="async ()=> await GetPlansAsync(1)" />
     </div>
