@@ -22,19 +22,19 @@ namespace PlannerApp.Shared.Validators
                 .NotEmpty()
                 .WithMessage("First name is required")
                 .MaximumLength(25)
-                .WithMessage("First name must bu less than 25 characters");
+                .WithMessage("First name must be less than 25 characters");
 
             RuleFor(p => p.LastName)    
                 .NotEmpty()
                 .WithMessage("Last name is required")
                 .MaximumLength(25)
-                .WithMessage("Last name must bu less than 25 characters");
+                .WithMessage("Last name must be less than 25 characters");
 
             RuleFor(p => p.Password)    
                 .NotEmpty()
                 .WithMessage("Password is required")
                 .MinimumLength(5)
-                .WithMessage("Password must bu least 5 characters");
+                .WithMessage("Password must be least 5 characters");
 
             RuleFor(p => p.ConfirmPassword)     
                 .Equal(p => p.Password)

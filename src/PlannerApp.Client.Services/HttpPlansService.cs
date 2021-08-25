@@ -19,6 +19,39 @@ namespace PlannerApp.Client.Services
         {
             _client = client;
         }
+
+        public async Task<ApiResponse<PlanDetail>> CreateAsync(PlanDetail model, FormFile coverFile)
+        {
+            var form = PreparePlanForm(model, coverFile, false);
+            var response = await _client.PostAsync("/api/v2/plans", form);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<PlanDetail>>();
+                return result;
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+
+        public async Task<ApiResponse<PlanDetail>> EditAsync(PlanDetail model, FormFile coverFile)
+        {
+            var form = PreparePlanForm(model, coverFile, true);
+            var response = await _client.PutAsync("/api/v2/plans", form);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<PlanDetail>>();
+                return result;
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+
         public async Task<ApiResponse<PageList<PlanSummary>>> GetPlansAsync(string query = null, int pageNumber = 1, int pageSize = 12)
         {
             var response = await _client.GetAsync($"/api/v2/plans?query={query}&pageNumber={pageNumber}&pageSize={pageSize}");
@@ -32,6 +65,24 @@ namespace PlannerApp.Client.Services
                 var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
                 throw new ApiException(errorResponse, response.StatusCode);
             }
+        }
+
+        private HttpContent PreparePlanForm(PlanDetail model, FormFile coverFile, bool isUpdate)
+        {
+            var form = new MultipartFormDataContent();
+            
+            form.Add(new StringContent(model.Title), nameof(PlanDetail.Title));
+            
+            if(!string.IsNullOrWhiteSpace(model.Description))
+                form.Add(new StringContent(model.Description), nameof(PlanDetail.Description));
+
+            if(isUpdate)
+                form.Add(new StringContent(model.Id), nameof(PlanDetail.Id));
+
+            if(coverFile != null)
+                form.Add(new StreamContent(coverFile.FileStream), nameof(model.CoverUrl), coverFile.FileName);
+
+            return form;
         }
     }
 }

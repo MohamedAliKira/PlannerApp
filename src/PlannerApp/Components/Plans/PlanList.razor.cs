@@ -13,7 +13,7 @@ namespace PlannerApp.Components
     {
         [Inject] public IPlansService PlanService { get; set; }
 
-        private bool _isBusy = false;
+        private bool _isBusy;
         private string _errorMessage = string.Empty;
         private int _pageNumber = 1;
         private int _pageSize = 12;
