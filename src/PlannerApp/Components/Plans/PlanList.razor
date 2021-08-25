@@ -1,5 +1,7 @@
 ﻿@namespace PlannerApp.Components
 
-    <div class="m-4">
-        <PlanCardList FetchPlans="GetPlansAsync" />
+<MudText Typo="Typo.h4">My Plans</MudText>     
+<div class="m-4">
+        @*<PlanCardList FetchPlans="GetPlansAsync" />*@
+        <PlansTable />
     </div>
