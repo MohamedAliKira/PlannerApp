@@ -25,8 +25,7 @@ namespace PlannerApp.Components
         private async Task GetPlansAsync(int pageNumber = 1)
         {
             _isBusy = true;
-            _pageNumber = pageNumber;
-            await Task.Delay(2000);
+            _pageNumber = pageNumber;            
             _result = await FetchPlans?.Invoke(_query, _pageNumber, _pageSize);
             _isBusy = false;
         }
