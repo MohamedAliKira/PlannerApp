@@ -52,6 +52,21 @@ namespace PlannerApp.Client.Services
             }
         }
 
+        public async Task<ApiResponse<PlanDetail>> GetByIdAsync(string Id)
+        {
+            var response = await _client.GetAsync($"/api/v2/plans/{Id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<PlanDetail>>();
+                return result;
+            }
+            else
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+
         public async Task<ApiResponse<PageList<PlanSummary>>> GetPlansAsync(string query = null, int pageNumber = 1, int pageSize = 12)
         {
             var response = await _client.GetAsync($"/api/v2/plans?query={query}&pageNumber={pageNumber}&pageSize={pageSize}");

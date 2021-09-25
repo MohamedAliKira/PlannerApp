@@ -15,12 +15,20 @@ namespace PlannerApp.Components
     {
         [Inject] public IPlansService PlansService { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
+        [Parameter] public string Id { get; set; }
 
+        private bool _isEditMode => Id != null;
         private PlanDetail _model = new();
         private bool _isBusy = false;
         private Stream _stream = null;
         private string _fileName = string.Empty;
         private string _errorMessage = string.Empty;
+
+        protected override async Task OnInitializedAsync()
+        {
+            if (_isEditMode)
+                await FetchPlanByIdAsync();
+        }
 
         private async Task SubmitFormAsync()
         {
@@ -31,19 +39,41 @@ namespace PlannerApp.Components
                 if (_stream != null)
                     formFile = new FormFile(_stream, _fileName);
 
-                var result = await PlansService.CreateAsync(_model, formFile);
-                if(result.IsSuccess)
-                {
-                    Navigation.NavigateTo("/plans");
-                }
+                if(_isEditMode)
+                    await PlansService.EditAsync(_model, formFile);
+                else 
+                    await PlansService.CreateAsync(_model, formFile);
+                
+                //success
+                Navigation.NavigateTo("/plans");
             }
-            catch(ApiException e)
+            catch (ApiException e)
             {
                 _errorMessage = e.ApiErrorResponse.Message;
             }
             catch (Exception ex)
             {
                 _errorMessage = ex.Message;
+            }
+            _isBusy = false;
+        }
+
+        private async Task FetchPlanByIdAsync()
+        {
+            _isBusy = true;
+            try
+            {
+                var result = await PlansService.GetByIdAsync(Id);
+                _model = result.Value;
+            }
+            catch (ApiException ex)
+            {
+                _errorMessage = ex.ApiErrorResponse.Message;
+            }
+            catch (Exception e)
+            {
+                //TODO : Log the error
+                _errorMessage = e.Message;
             }
             _isBusy = false;
         }
@@ -61,7 +91,7 @@ namespace PlannerApp.Components
                 }
                 string[] allowedExtension = new[] { ".jpg", ".png", ".bmp", ".svg" };
                 string extension = Path.GetExtension(file.Name).ToLower();
-                if(!allowedExtension.Contains(extension))
+                if (!allowedExtension.Contains(extension))
                 {
                     _errorMessage = "Please choose a valid image file";
                     return;
@@ -69,7 +99,7 @@ namespace PlannerApp.Components
                 using (var stream = file.OpenReadStream(2097152))
                 {
                     var buffer = new byte[file.Size];
-                    await stream.ReadAsync(buffer, 0,(int)file.Size);
+                    await stream.ReadAsync(buffer, 0, (int)file.Size);
                     _stream = new MemoryStream(buffer);
                     _stream.Position = 0;
                     _fileName = file.Name;

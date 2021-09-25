@@ -1,4 +1,5 @@
-﻿using MudBlazor;
+﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace PlannerApp.Pages
 {
     public partial class CreateEditPlan
     {
+        [Parameter] public string Id { get; set; }
+
         private List<BreadcrumbItem> _breadcrumbItems = new()
         {
             new BreadcrumbItem("Home", "/index"),

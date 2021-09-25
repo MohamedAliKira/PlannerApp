@@ -8,7 +8,7 @@
     <Authorized>        
         <MudMenu FullWidth="true">
             <ActivatorContent>
-                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary" Direction="Direction.Left" OffsetX="true">
+                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary" Direction="Direction.Left" OffsetY="true">
                     Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value @context.User.FindFirst(ClaimTypes.Surname).Value !
                 </MudChip>
             </ActivatorContent>

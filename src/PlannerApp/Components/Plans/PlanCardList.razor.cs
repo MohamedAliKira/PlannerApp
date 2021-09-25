@@ -10,7 +10,7 @@ namespace PlannerApp.Components
     public partial class PlanCardList
     {
         [Parameter] public Func<string, int, int, Task<PageList<PlanSummary>>> FetchPlans { get; set; }
-
+        [Inject] public NavigationManager Navigation { get; set; }
         private bool _isBusy{ get; set; }
         private string _query = string.Empty;
         private int _pageNumber = 1;
@@ -28,6 +28,11 @@ namespace PlannerApp.Components
             _pageNumber = pageNumber;            
             _result = await FetchPlans?.Invoke(_query, _pageNumber, _pageSize);
             _isBusy = false;
+        }
+
+        private void EditPlan(PlanSummary plan)
+        {
+            Navigation.NavigateTo($"/plans/form/{plan.Id}");
         }
     } 
 

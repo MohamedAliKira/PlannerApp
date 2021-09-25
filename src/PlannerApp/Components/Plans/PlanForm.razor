@@ -4,11 +4,19 @@
 
 <EditForm Model="_model" OnValidSubmit="SubmitFormAsync">
     <FluentValidationValidator />
-    <MudTextField Label="Title" HelperText="Required" @bind-Value="@_model.Title" Variant="Variant.Outlined"/>
-    <MudTextField Label="Descritopn" HelperText="Optional" @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined"/>
+    <MudTextField Label="Title" HelperText="Required" @bind-Value="@_model.Title" Variant="Variant.Outlined" />
+    <MudTextField Label="Descritopn" HelperText="Optional" @bind-Value="@_model.Description" Lines="4" Variant="Variant.Outlined" />
 
     <InputFile id="fileInput" OnChange="OnChooseFileAsync" hidden multiple />
-    <MudFab HtmlTag="label" Color="Color.Secondary" Icon="@Icons.Filled.Image" Label="Load picture" for="fileInput" />
+    <MudFab HtmlTag="label"
+            Color="Color.Secondary"
+            Icon="@Icons.Filled.Image"
+            Label="Load picture"
+            for="fileInput" />
+    @if (_isEditMode)
+    {
+        <img src="@_model.CoverUrl" style="width:75%;" class="m-2" />
+    }
 
     @if (_stream != null)
     {
@@ -20,7 +28,7 @@
         <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Class="my-2">@_errorMessage</MudAlert>
     }
 
-    <MudDivider DividerType="DividerType.FullWidth" Class="my-2"/>
+    <MudDivider DividerType="DividerType.FullWidth" Class="my-2" />
 
     <ValidationSummary />
     <MudButton Color="Color.Primary" Variant="Variant.Filled" Disabled="_isBusy"
