@@ -11,6 +11,8 @@ namespace PlannerApp.Components
     {
         [Parameter] public Func<string, int, int, Task<PageList<PlanSummary>>> FetchPlans { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
+        [Parameter] public EventCallback<PlanSummary> OnEditClicked { get; set; }
+
         private bool _isBusy{ get; set; }
         private string _query = string.Empty;
         private int _pageNumber = 1;
@@ -30,10 +32,7 @@ namespace PlannerApp.Components
             _isBusy = false;
         }
 
-        private void EditPlan(PlanSummary plan)
-        {
-            Navigation.NavigateTo($"/plans/form/{plan.Id}");
-        }
+        
     } 
 
 }

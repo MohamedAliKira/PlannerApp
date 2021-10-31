@@ -12,7 +12,7 @@ namespace PlannerApp.Components
     public partial class PlanList
     {
         [Inject] public IPlansService PlanService { get; set; }
-
+        [Inject] public NavigationManager Navigation { get; set; }
         private bool _isBusy;
         private string _errorMessage = string.Empty;
         private int _pageNumber = 1;
@@ -48,6 +48,13 @@ namespace PlannerApp.Components
         private bool _isCardsViewEnabled = true;
         private void setCardView() => _isCardsViewEnabled = true;
         private void setTableView() => _isCardsViewEnabled = false;
+        #endregion
+
+        #region Edit
+        private void EditPlan(PlanSummary plan)
+        {
+            Navigation.NavigateTo($"/plans/form/{plan.Id}");
+        }
         #endregion
     }
 }

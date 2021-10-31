@@ -8,10 +8,11 @@
 <div class="m-4">
     @if (_isCardsViewEnabled)
     {
-        <PlanCardList FetchPlans="GetPlansAsync" />
+        <PlanCardList FetchPlans="GetPlansAsync"
+                      OnEditClicked="EditPlan"/>
     }
     else
     {
-        <PlansTable />
+        <PlansTable OnEditClicked="EditPlan"/>
     }
 </div>
