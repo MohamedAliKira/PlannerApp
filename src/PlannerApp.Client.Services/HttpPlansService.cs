@@ -36,6 +36,16 @@ namespace PlannerApp.Client.Services
             }
         }
 
+        public async Task DeleteAsync(string id)
+        {
+            var response = await _client.DeleteAsync($"/api/v2/plans/{id}");
+            if (!response.IsSuccessStatusCode)
+            {                
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
+                throw new ApiException(errorResponse, response.StatusCode);
+            }
+        }
+
         public async Task<ApiResponse<PlanDetail>> EditAsync(PlanDetail model, FormFile coverFile)
         {
             var form = PreparePlanForm(model, coverFile, true);

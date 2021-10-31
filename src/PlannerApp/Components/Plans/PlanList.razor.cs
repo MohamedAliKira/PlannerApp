@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Shared.Models;
@@ -11,8 +12,13 @@ namespace PlannerApp.Components
 {
     public partial class PlanList
     {
-        [Inject] public IPlansService PlanService { get; set; }
-        [Inject] public NavigationManager Navigation { get; set; }
+        [Inject] 
+        public IPlansService PlanService { get; set; }
+        [Inject] 
+        public NavigationManager Navigation { get; set; }
+        [Inject] 
+        public IDialogService DialogService { get; set; }
+
         private bool _isBusy;
         private string _errorMessage = string.Empty;
         private int _pageNumber = 1;
@@ -54,6 +60,25 @@ namespace PlannerApp.Components
         private void EditPlan(PlanSummary plan)
         {
             Navigation.NavigateTo($"/plans/form/{plan.Id}");
+        }
+        #endregion
+
+        #region Delete
+        private async Task DeletePlanAsync(PlanSummary plan)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("ContentText", $"Do you really want to delete these plan '{plan.Title}'?");
+            parameters.Add("ButtonText", "Delete");
+            parameters.Add("Color", Color.Error);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<ConfirmationDialog>("Delete", parameters, options);
+            var result = await dialog.Result;
+            if (!result.Cancelled)
+            {
+                await PlanService.DeleteAsync(plan.Id);
+            }
         }
         #endregion
     }
