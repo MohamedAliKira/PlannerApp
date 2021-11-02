@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AKSoftware.Blazor.Utilities;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Client.Services.Interfaces;
@@ -19,7 +20,7 @@ namespace PlannerApp.Components
         [Inject] 
         public IDialogService DialogService { get; set; }
 
-        private bool _isBusy;
+        //private bool _isBusy;
         private string _errorMessage = string.Empty;
         private int _pageNumber = 1;
         private int _pageSize = 12;
@@ -28,7 +29,7 @@ namespace PlannerApp.Components
 
         private async Task<PageList<PlanSummary>> GetPlansAsync(string query = "", int pageNumber = 1, int pageSize = 12)
         {
-            _isBusy = true;
+            //_isBusy = true;
             try
             {
                 var result = await PlanService.GetPlansAsync(query, pageNumber, pageSize);
@@ -46,7 +47,7 @@ namespace PlannerApp.Components
             {
                 _errorMessage = ex.Message;
             }
-            _isBusy = false;
+            //_isBusy = false;
             return null;
         }
 
@@ -77,7 +78,24 @@ namespace PlannerApp.Components
             var result = await dialog.Result;
             if (!result.Cancelled)
             {
-                await PlanService.DeleteAsync(plan.Id);
+                try
+                {
+                    await PlanService.DeleteAsync(plan.Id);
+
+                    //Send a message about the deleted plan
+                    MessagingCenter.Send(this, "plan_deleted", plan);
+                }
+                catch(ApiException ex)
+                {
+                    _errorMessage = ex.Message;
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    _errorMessage = e.Message;
+                    throw;
+                }
+                
             }
         }
         #endregion

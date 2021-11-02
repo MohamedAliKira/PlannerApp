@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AKSoftware.Blazor.Utilities;
+using Microsoft.AspNetCore.Components;
 using PlannerApp.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,15 @@ namespace PlannerApp.Components
         private int _pageNumber = 1;
         private int _pageSize = 12;
         private PageList<PlanSummary> _result = new();
+
+        protected override void OnInitialized()
+        {
+            MessagingCenter.Subscribe<PlanList, PlanSummary>(this, "plan_deleted", async (sender, args) =>
+            {
+                await GetPlansAsync(_pageNumber);
+                StateHasChanged();
+            });
+        }
 
         protected async override Task OnInitializedAsync()
         {

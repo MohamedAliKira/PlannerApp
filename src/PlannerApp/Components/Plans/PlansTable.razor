@@ -3,8 +3,7 @@
 
 <MudTable ServerData="@(new Func<TableState, Task<TableData<PlanSummary>>>(ServerReloadAsync))"
           Dense="true" Hover="true" @ref="_table">
-    <ToolBarContent>
-        @*<MudText Typo="Typo.h6">My Plans</MudText>*@
+    <ToolBarContent>      
         <MudSpacer />
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
