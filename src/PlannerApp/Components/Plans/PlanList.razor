@@ -9,12 +9,14 @@
     @if (_isCardsViewEnabled)
     {
         <PlanCardList FetchPlans="GetPlansAsync"
+                      OnViewClicked="ViewPlan"
                       OnEditClicked="EditPlan"
                       OnDeleteClicked="DeletePlanAsync"/>
     }
     else
     {
         <PlansTable OnEditClicked="EditPlan" 
-                    OnDeleteClicked="DeletePlanAsync"/>
+                    OnDeleteClicked="DeletePlanAsync"
+                    OnViewClicked="ViewPlan"/>
     }
 </div>

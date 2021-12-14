@@ -48,3 +48,11 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+
+.child {    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

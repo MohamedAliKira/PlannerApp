@@ -48,6 +48,7 @@ else
             {
                 <MudItem sm="12" md="4" lg="3">
                     <PlanCard PlanSummary="plan" 
+                              OnViewClicked="() =>OnViewClicked.InvokeAsync(plan)"
                               OnEditClicked="() =>OnEditClicked.InvokeAsync(plan)"
                               OnDeleteClicked="() =>OnDeleteClicked.InvokeAsync(plan)"/>
                 </MudItem>

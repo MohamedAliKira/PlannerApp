@@ -12,6 +12,8 @@ namespace PlannerApp.Components
     {
         [Parameter] public Func<string, int, int, Task<PageList<PlanSummary>>> FetchPlans { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
+
+        [Parameter] public EventCallback<PlanSummary> OnViewClicked { get; set; }
         [Parameter] public EventCallback<PlanSummary> OnEditClicked { get; set; }
         [Parameter] public EventCallback<PlanSummary> OnDeleteClicked { get; set; }
         private bool _isBusy{ get; set; }
@@ -44,5 +46,4 @@ namespace PlannerApp.Components
 
         
     } 
-
 }

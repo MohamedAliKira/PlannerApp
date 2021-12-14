@@ -99,5 +99,17 @@ namespace PlannerApp.Components
             }
         }
         #endregion
+
+        #region View
+        private void ViewPlan(PlanSummary plan)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("PlanId", plan.Id);
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium };
+
+            var dialog = DialogService.Show<PlanDetailsDialog>("Details", parameters, options);
+        }
+        #endregion
     }
 }
