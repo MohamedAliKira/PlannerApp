@@ -2,6 +2,8 @@
 @page "/plans/form/{Id}"
 @namespace PlannerApp.Pages
 
+<PageTitle>@(Id == null ? "Create" : "Edit" ) | PlannerApp </PageTitle>
+
 <PlannerPage BreadcrumbItems="_breadcrumbItems" Title="Create/Edit a Plan">
     <MudGrid>
         <MudItem lg="6" md="8" sm="12">
