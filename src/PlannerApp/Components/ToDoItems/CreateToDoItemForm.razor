@@ -6,7 +6,7 @@
                     Placeholder="To do anything" 
                     Class="flex-grow-1 flex-shrink-0 mr-2"
                     Variant="Variant.Outlined" 
-                    Error="@(string.IsNullOrWhiteSpace(_errorMessage))"
+                    Error="@(!string.IsNullOrWhiteSpace(_errorMessage))"
                     ErrorText="@_errorMessage"
                     Margin="Margin.Dense"></MudTextField>
     @if (_isBusy)

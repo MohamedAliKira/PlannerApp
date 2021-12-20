@@ -27,15 +27,13 @@ namespace PlannerApp.Components
 {
     public partial class CreateToDoItemForm
     {
-        [Inject] 
-        public IToDoItemsService ToDoItemsService  { get; set; }
-        [Parameter] 
-        public string PlanId { get; set; }
-        [Parameter]
-        public EventCallback<ToDoItemDetail> OnToDoItemAdded { get; set; }
-        private bool _isBusy = false;
+        [Inject] public IToDoItemsService ToDoItemsService  { get; set; }
+        [Parameter] public string PlanId { get; set; }
+        [Parameter] public EventCallback<ToDoItemDetail> OnToDoItemAdded { get; set; }
         private string _description { get; set; }
+        private bool _isBusy = false;
         private string _errorMessage = string.Empty;
+
         private async Task AddToDoItemAsync()
         {            
             _errorMessage = string.Empty;
@@ -46,8 +44,8 @@ namespace PlannerApp.Components
                     _errorMessage = "Description is Required";
                     return;
                 }
-                _isBusy = true;
                 //Call the API to add the item
+                _isBusy = true;
                 var result = await ToDoItemsService.CreateAsync(_description, PlanId);
                 _description = string.Empty;
 

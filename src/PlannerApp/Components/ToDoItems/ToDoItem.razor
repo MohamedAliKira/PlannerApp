@@ -7,22 +7,24 @@
         {
             <MudTextField @bind-Value="@_description" Label="Outlined" Class="flex-grow-1 flex-shrink-0 mr-2"
                       Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-            <MudIconButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Primary" 
-                            OnClick="()=> _isEditMode = false" class="flex-grow-0 flex-shrink-0 mr-2"></MudIconButton>
+            <MudIconButton  Icon="@Icons.Material.Filled.Cancel" 
+                            Color="Color.Primary" 
+                            OnClick="() =>ToggleEditMode(true)" 
+                            class="flex-grow-0 flex-shrink-0 mr-2"></MudIconButton>
             <MudIconButton Icon="@Icons.Material.Filled.Save"                             
-                            Color="Color.Success" class="flex-grow-0 flex-shrink-0 mr-2">
+                            Color="Color.Success" 
+                            
+                            class="flex-grow-0 flex-shrink-0 mr-2">
             </MudIconButton>
         }
         else
         {
             <MudText Typo="Typo.body1" Class="flex-grow-1 flex-shrink-0 mr-2"
                  Style="cursor:pointer"
-                 @onclick="()=> _isEditMode = true">
-                Studying Blazor with .NET  6. And ASP.NET Core0
+                 @onclick="() =>ToggleEditMode(false)">
+                @Item.Description
             </MudText>
-        }
-        @if (!_isEditMode)
-        {
+            
             <MudIconButton Icon="@Icons.Material.Filled.Delete"
                        Color="Color.Error" class="flex-grow-0 flex-shrink-0 mr-2">
             </MudIconButton>

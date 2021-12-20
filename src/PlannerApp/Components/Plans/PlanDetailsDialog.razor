@@ -42,11 +42,11 @@
                 {
                     <!-- Items go here-->
                     <CreateToDoItemForm PlanId="@PlanId" OnToDoItemAdded="OnToDoItemAddedCallback"/>
-                    <ToDoItem />
-                    <ToDoItem />
-                    <ToDoItem />
-                    <ToDoItem />
-                    <ToDoItem />
+                    
+                    @foreach (var item in _items)
+                    {
+                        <ToDoItem Item="item"/>
+                    }
                 }
             </MudItem>
         </MudGrid>

@@ -15,6 +15,7 @@ namespace PlannerApp.Components
         private PlanDetail _plan;
         private bool _isBusy;
         private string _errorMessage = string.Empty;
+        private List<ToDoItemDetail> _items = new();
 
         private void Close()
         {
@@ -39,6 +40,8 @@ namespace PlannerApp.Components
             {
                 var result = await PlansService.GetByIdAsync(PlanId);
                 _plan = result.Value;
+                _items = _plan.ToDoItems;
+                StateHasChanged();
             }
             catch(ApiException e)
             {
@@ -55,8 +58,7 @@ namespace PlannerApp.Components
 
         private void OnToDoItemAddedCallback(ToDoItemDetail toDoItem)
         {
-            Console.WriteLine(toDoItem.Id);
-            Console.WriteLine(toDoItem.Description);
+            _items.Add(toDoItem);
         }
     }
 }
