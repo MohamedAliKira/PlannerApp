@@ -45,7 +45,7 @@
                     
                     @foreach (var item in _items)
                     {
-                        <ToDoItem Item="item" OnItemDeleted="OnItemDeletedCallback"/>
+                        <ToDoItem Item="item" OnItemDeleted="OnItemDeletedCallback" OnItemEdited="OnItemEditedCallback"/>
                     }
                 }
             </MudItem>

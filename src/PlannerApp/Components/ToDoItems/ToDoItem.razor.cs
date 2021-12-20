@@ -1,24 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.JSInterop;
-using PlannerApp;
-using PlannerApp.Shared;
-using PlannerApp.Components;
-using MudBlazor;
-using Blazored.FluentValidation;
-using PlannerApp.Pages.Authentication;
 using PlannerApp.Shared.Models;
 using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Client.Services.Exceptions;
@@ -30,10 +10,13 @@ namespace PlannerApp.Components
         [Inject] public IToDoItemsService ToDoItemsService { get; set; }
         [Parameter] public ToDoItemDetail Item { get; set; }
         [Parameter] public EventCallback<ToDoItemDetail> OnItemDeleted { get; set; }
+        [Parameter] public EventCallback<ToDoItemDetail> OnItemEdited { get; set; }
+
         private bool _isChecked = true;
         private bool _isBusy = false;
         private bool _isEditMode = false;
         private string _description = string.Empty;
+        private string _errorMessage = string.Empty;
         private void ToggleEditMode(bool isCancel)
         {
             if (_isEditMode)
@@ -67,6 +50,37 @@ namespace PlannerApp.Components
             {
                 //TODO: Handler error globaly
                 
+            }
+            _isBusy = false;
+        }
+
+        private async Task EditItemAsync()
+        {
+            _errorMessage = string.Empty;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(_description))
+                {
+                    _errorMessage = "Description is Required";
+                    return;
+                }
+                //Call the API to add the item
+                _isBusy = true;
+                var result = await ToDoItemsService.EditAsync(Item.Id, _description, Item.PlanId);
+                ToggleEditMode(false);
+
+                //Notify the parent about the newly added item
+                await OnItemEdited.InvokeAsync(result.Value);
+                
+            }
+            catch (ApiException e)
+            {
+                _errorMessage = e.Message;
+            }
+            catch (Exception ex)
+            {
+                //TODO: Handler error globaly
+                _errorMessage = ex.Message;
             }
             _isBusy = false;
         }

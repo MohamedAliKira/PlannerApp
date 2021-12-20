@@ -64,6 +64,13 @@ namespace PlannerApp.Components
         {
             _items.Remove(toDoItem);
         }
-        
+
+        private void OnItemEditedCallback(ToDoItemDetail toDoItem)
+        {
+            var editedItem = _items.SingleOrDefault(i => i.Id == toDoItem.Id);
+            editedItem.Description = toDoItem.Description;
+            editedItem.IsDone = toDoItem.IsDone;
+        }
+
     }
 }

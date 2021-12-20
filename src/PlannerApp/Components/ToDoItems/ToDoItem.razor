@@ -5,16 +5,28 @@
         <MudCheckBox @bind-Checked="@_isChecked" Color="Color.Primary" class="flex-grow-0 flex-shrink-0 mr-2"></MudCheckBox>
         @if (_isEditMode)
         {
-            <MudTextField @bind-Value="@_description" Label="Outlined" Class="flex-grow-1 flex-shrink-0 mr-2"
-                      Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+            <MudTextField @bind-Value="@_description"
+                      Label="Description" Class="flex-grow-1 flex-shrink-0 mr-2"
+                      Variant="Variant.Outlined"
+                      Error="@(!string.IsNullOrWhiteSpace(_errorMessage))"
+                      ErrorText="@_errorMessage"
+                      Margin="Margin.Dense"></MudTextField>
             <MudIconButton Icon="@Icons.Material.Filled.Cancel"
                        Color="Color.Primary"
                        OnClick="() =>ToggleEditMode(true)"
                        class="flex-grow-0 flex-shrink-0 mr-2"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Save"
+            @if (_isBusy)
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="flex-grow-0 flex-shrink-0 mr-2" />
+            }
+            else
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Save"
                        Color="Color.Success"
+                       OnClick="EditItemAsync"
                        class="flex-grow-0 flex-shrink-0 mr-2">
-            </MudIconButton>
+                </MudIconButton>
+            }
         }
         else
         {
