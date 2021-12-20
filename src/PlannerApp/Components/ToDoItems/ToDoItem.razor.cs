@@ -20,14 +20,18 @@ using MudBlazor;
 using Blazored.FluentValidation;
 using PlannerApp.Pages.Authentication;
 using PlannerApp.Shared.Models;
+using PlannerApp.Client.Services.Interfaces;
+using PlannerApp.Client.Services.Exceptions;
 
 namespace PlannerApp.Components
 {
     public partial class ToDoItem
     {
-        [Parameter]
-        public ToDoItemDetail Item { get; set; }
+        [Inject] public IToDoItemsService ToDoItemsService { get; set; }
+        [Parameter] public ToDoItemDetail Item { get; set; }
+        [Parameter] public EventCallback<ToDoItemDetail> OnItemDeleted { get; set; }
         private bool _isChecked = true;
+        private bool _isBusy = false;
         private bool _isEditMode = false;
         private string _description = string.Empty;
         private void ToggleEditMode(bool isCancel)
@@ -42,6 +46,29 @@ namespace PlannerApp.Components
                 _isEditMode = true;
                 _description = Item.Description;
             }
+        }
+
+        private async Task RemoveItemAsync()
+        {
+            try
+            {               
+                //Call the API to add the item
+                _isBusy = true;
+                await ToDoItemsService.DeleteAsync(Item.Id);
+                
+                //Notify the parent about the newly added item
+                await OnItemDeleted.InvokeAsync(Item);
+            }
+            catch (ApiException e)
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                //TODO: Handler error globaly
+                
+            }
+            _isBusy = false;
         }
     }
 }

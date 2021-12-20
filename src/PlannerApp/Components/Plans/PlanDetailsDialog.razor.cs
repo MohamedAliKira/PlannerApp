@@ -60,5 +60,10 @@ namespace PlannerApp.Components
         {
             _items.Add(toDoItem);
         }
+        private void OnItemDeletedCallback(ToDoItemDetail toDoItem)
+        {
+            _items.Remove(toDoItem);
+        }
+        
     }
 }
