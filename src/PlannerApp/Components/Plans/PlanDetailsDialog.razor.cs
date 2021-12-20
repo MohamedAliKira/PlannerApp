@@ -43,12 +43,20 @@ namespace PlannerApp.Components
             catch(ApiException e)
             {
                 // TODO
+                _errorMessage = e.Message;
             }
             catch (Exception ex)
             {
                 // Log this error
+                _errorMessage = ex.Message;
             }
             _isBusy = false;
+        }
+
+        private void OnToDoItemAddedCallback(ToDoItemDetail toDoItem)
+        {
+            Console.WriteLine(toDoItem.Id);
+            Console.WriteLine(toDoItem.Description);
         }
     }
 }

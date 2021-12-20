@@ -1,0 +1,24 @@
+﻿@namespace PlannerApp.Components
+
+<div class="d-flex flex-row align-center my-2">
+    <MudTextField @bind-Value="@_description" 
+                    Label="New Item Description" 
+                    Placeholder="To do anything" 
+                    Class="flex-grow-1 flex-shrink-0 mr-2"
+                    Variant="Variant.Outlined" 
+                    Error="@(string.IsNullOrWhiteSpace(_errorMessage))"
+                    ErrorText="@_errorMessage"
+                    Margin="Margin.Dense"></MudTextField>
+    @if (_isBusy)
+    {
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="flex-grow-0 flex-shrink-0 mr-2"/>
+    }
+    else 
+    {
+        <MudIconButton Icon="@Icons.Material.Filled.Add"
+                       Color="Color.Success"
+                       class="flex-grow-0 flex-shrink-0 mr-2"
+                       OnClick="AddToDoItemAsync">
+        </MudIconButton>
+    }
+</div>
