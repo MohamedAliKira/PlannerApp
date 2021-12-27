@@ -17,6 +17,11 @@ namespace PlannerApp.Components
         private bool _isEditMode = false;
         private string _description = string.Empty;
         private string _errorMessage = string.Empty;
+        private string _descriptionStyle => $"cursor:pointer; {(_isChecked ? "text-decoration:line-through" : "")}";
+        protected override void OnInitialized()
+        {
+            _isChecked = Item.IsDone;
+        }
         private void ToggleEditMode(bool isCancel)
         {
             if (_isEditMode)
@@ -30,7 +35,6 @@ namespace PlannerApp.Components
                 _description = Item.Description;
             }
         }
-
         private async Task RemoveItemAsync()
         {
             try
@@ -39,21 +43,21 @@ namespace PlannerApp.Components
                 _isBusy = true;
                 await ToDoItemsService.DeleteAsync(Item.Id);
                 
-                //Notify the parent about the newly added item
+                //Notify the parent about the deleted item
                 await OnItemDeleted.InvokeAsync(Item);
             }
             catch (ApiException e)
             {
-                
+                _errorMessage = e.Message;
             }
             catch (Exception ex)
             {
                 //TODO: Handler error globaly
-                
+                _errorMessage = ex.Message;
+
             }
             _isBusy = false;
         }
-
         private async Task EditItemAsync()
         {
             _errorMessage = string.Empty;
@@ -69,9 +73,36 @@ namespace PlannerApp.Components
                 var result = await ToDoItemsService.EditAsync(Item.Id, _description, Item.PlanId);
                 ToggleEditMode(false);
 
-                //Notify the parent about the newly added item
+                //Notify the parent about the newly edited item
                 await OnItemEdited.InvokeAsync(result.Value);
                 
+            }
+            catch (ApiException e)
+            {
+                _errorMessage = e.Message;
+            }
+            catch (Exception ex)
+            {
+                //TODO: Handler error globaly
+                _errorMessage = ex.Message;
+            }
+            _isBusy = false;
+        }
+
+        private async Task ToggleItemAsync(bool value)
+        {
+            _errorMessage = string.Empty;
+            try
+            {                
+                //Call the API to add the item
+                _isBusy = true;
+                await ToDoItemsService.ToggleAsync(Item.Id);                
+                Item.IsDone = !Item.IsDone;
+                _isChecked = Item.IsDone;
+
+                //Notify the parent about the newly edited item
+                await OnItemEdited.InvokeAsync(Item);
+
             }
             catch (ApiException e)
             {

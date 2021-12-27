@@ -65,7 +65,7 @@ public class HttpToDoItemsService : IToDoItemsService
 
     public async Task ToggleAsync(string Id)
     {
-        var response = await _client.PutAsJsonAsync<object>($"/api//api/v2/ToDos/Toggle/{Id}", null);
+        var response = await _client.PutAsJsonAsync<object>($"/api/v2/ToDos/Toggle/{Id}", null);
         if (!response.IsSuccessStatusCode)
         {
             var errorResponse = await response.Content.ReadFromJsonAsync<ApiErrorResponse>();
