@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Client.Services.Interfaces;
+using PlannerApp.Shared;
 using PlannerApp.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace PlannerApp.Components
     {
         [Inject] public IAuthenticationService AuthenticationService { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
-        
+        [CascadingParameter] public Error Error { get; set; }
 
         private RegisterRequest _model = new();
         private bool _isBusy = false;
@@ -28,7 +29,7 @@ namespace PlannerApp.Components
             _errorMessage = string.Empty;
 
             try
-            {
+            {                
                 await AuthenticationService.RegisterUserAsync(_model);
                 Navigation.NavigateTo("/");
             }
@@ -39,8 +40,7 @@ namespace PlannerApp.Components
             }
             catch (Exception e)
             {
-                // Handle the errors 
-                _errorMessage = e.Message;
+                Error.HandleError(e);
             }
 
             _isBusy = false;

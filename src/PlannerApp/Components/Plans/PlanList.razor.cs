@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Client.Services.Interfaces;
+using PlannerApp.Shared;
 using PlannerApp.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,10 @@ namespace PlannerApp.Components
 {
     public partial class PlanList
     {
-        [Inject] 
-        public IPlansService PlanService { get; set; }
-        [Inject] 
-        public NavigationManager Navigation { get; set; }
-        [Inject] 
-        public IDialogService DialogService { get; set; }
+        [Inject] public IPlansService PlanService { get; set; }
+        [Inject] public NavigationManager Navigation { get; set; }
+        [Inject] public IDialogService DialogService { get; set; }
+        [CascadingParameter] public Error Error { get; set; }
 
         //private bool _isBusy;
         private string _errorMessage = string.Empty;
@@ -45,7 +44,7 @@ namespace PlannerApp.Components
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                Error.HandleError(ex);
             }
             //_isBusy = false;
             return null;

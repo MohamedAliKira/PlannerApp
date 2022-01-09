@@ -8,9 +8,19 @@
 
 @code {
     private int currentCount = 0;
-
+    [CascadingParameter] public Error Error { get; set; }
     private void IncrementCount()
     {
-        currentCount++;
+        try
+        {
+            currentCount++;
+            if (currentCount == 3)
+                throw new ArgumentOutOfRangeException("current Count inferieur a 3 svp");
+        }   
+        catch (ArgumentException e)
+        {
+            Error.HandleError(e);            
+        }
+        
     }
 }

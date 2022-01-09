@@ -3,6 +3,7 @@ using MudBlazor;
 using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Shared.Models;
 using PlannerApp.Client.Services.Exceptions;
+using PlannerApp.Shared;
 
 namespace PlannerApp.Components
 {
@@ -11,6 +12,7 @@ namespace PlannerApp.Components
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
         [Inject] public IPlansService PlansService { get; set; }
         [Parameter] public string PlanId { get; set; }
+        [CascadingParameter] public Error Error { get; set; }
 
         private PlanDetail _plan;
         private bool _isBusy;
@@ -50,8 +52,7 @@ namespace PlannerApp.Components
             }
             catch (Exception ex)
             {
-                // Log this error
-                _errorMessage = ex.Message;
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }

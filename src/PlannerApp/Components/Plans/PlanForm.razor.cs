@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Client.Services.Interfaces;
+using PlannerApp.Shared;
 using PlannerApp.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace PlannerApp.Components
         [Inject] public IPlansService PlansService { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
         [Parameter] public string Id { get; set; }
+        [CascadingParameter] public Error Error { get; set; }
 
         private bool _isEditMode => Id != null;
         private PlanDetail _model = new();
@@ -53,7 +55,7 @@ namespace PlannerApp.Components
             }
             catch (Exception ex)
             {
-                _errorMessage = ex.Message;
+                Error.HandleError(ex);  
             }
             _isBusy = false;
         }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using PlannerApp.Shared.Models;
 using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Client.Services.Exceptions;
+using PlannerApp.Shared;
 
 namespace PlannerApp.Components
 {
@@ -11,6 +12,7 @@ namespace PlannerApp.Components
         [Parameter] public ToDoItemDetail Item { get; set; }
         [Parameter] public EventCallback<ToDoItemDetail> OnItemDeleted { get; set; }
         [Parameter] public EventCallback<ToDoItemDetail> OnItemEdited { get; set; }
+        [CascadingParameter] public Error Error { get; set; }
 
         private bool _isChecked = true;
         private bool _isBusy = false;
@@ -53,8 +55,7 @@ namespace PlannerApp.Components
             catch (Exception ex)
             {
                 //TODO: Handler error globaly
-                _errorMessage = ex.Message;
-
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }
@@ -84,11 +85,10 @@ namespace PlannerApp.Components
             catch (Exception ex)
             {
                 //TODO: Handler error globaly
-                _errorMessage = ex.Message;
+                Error.HandleError(ex);
             }
             _isBusy = false;
         }
-
         private async Task ToggleItemAsync(bool value)
         {
             _errorMessage = string.Empty;
@@ -111,7 +111,7 @@ namespace PlannerApp.Components
             catch (Exception ex)
             {
                 //TODO: Handler error globaly
-                _errorMessage = ex.Message;
+               Error.HandleError(ex);
             }
             _isBusy = false;
         }

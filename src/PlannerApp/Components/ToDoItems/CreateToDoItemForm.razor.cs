@@ -30,6 +30,7 @@ namespace PlannerApp.Components
         [Inject] public IToDoItemsService ToDoItemsService  { get; set; }
         [Parameter] public string PlanId { get; set; }
         [Parameter] public EventCallback<ToDoItemDetail> OnToDoItemAdded { get; set; }
+        [CascadingParameter] public Error Error { get; set; }
         private string _description { get; set; }
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
@@ -58,8 +59,7 @@ namespace PlannerApp.Components
             }
             catch (Exception ex)
             {
-                //TODO: Handler error globaly
-                _errorMessage = ex.Message;
+                Error.HandleError(ex);
             }
             _isBusy = false;
             
