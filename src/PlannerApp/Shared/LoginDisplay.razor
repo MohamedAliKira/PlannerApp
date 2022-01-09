@@ -6,32 +6,19 @@
 
 <AuthorizeView>
     <Authorized>
-        <MudMenu FullWidth="true">
-            <ActivatorContent>
-                <MudChip Icon="@Icons.Material.Filled.Person" Color="Color.Primary" 
-                    AnchorOrigin="Origin.BottomLeft"
-                    TransformOrigin="Origin.TopRight">
-                    Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value @context.User.FindFirst(ClaimTypes.Surname).Value !
-                </MudChip>
-            </ActivatorContent>
-            <ChildContent>
-                <MudMenuItem OnClick="LogOutAsync">LogOut</MudMenuItem>
-            </ChildContent>
-        </MudMenu>
-
-        @*<MudMenu Icon="@Icons.Material.Filled.Person" Color="Color.Default"
+        <MudMenu Icon="@Icons.Material.Filled.Person" Color="Color.Inherit"
                  Direction="Direction.Right" OffsetY="true">
             <MudMenuItem>
                 Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value @context.User.FindFirst(ClaimTypes.Surname).Value !
             </MudMenuItem>
-            <MudMenuItem OnClick="LogOutAsync">LogOut</MudMenuItem>
+            <MudMenuItem OnClick="LogOutAsync">Log out</MudMenuItem>
 
-        </MudMenu>*@
+        </MudMenu>
     </Authorized>
-    <NotAuthorized>
+    @*<NotAuthorized>
         <MudButton Variant="Variant.Outlined" Color="Color.Info"
                    StartIcon="@Icons.Material.Filled.Login" OnClick='() => Navigation.NavigateTo("/authentication/login")'>Login</MudButton>
-    </NotAuthorized>
+    </NotAuthorized>*@
 </AuthorizeView>
 
 
