@@ -1,8 +1,9 @@
 ﻿@page "/plans/form"
 @page "/plans/form/{Id}"
 @namespace PlannerApp.Pages
+@attribute [Authorize]
 
-<PageTitle>@(Id == null ? "Create" : "Edit" ) | PlannerApp </PageTitle>
+<PageTitle>@(Id == null ? Language["Create"] : Language["Edit"] ) | PlannerApp </PageTitle>
 
 <PlannerPage BreadcrumbItems="_breadcrumbItems" Title="Create/Edit a Plan">
     <MudGrid>

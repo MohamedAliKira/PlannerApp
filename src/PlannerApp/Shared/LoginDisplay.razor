@@ -36,6 +36,6 @@
         await Storage.RemoveItemAsync("expiry_date");
 
         await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        Navigation.NavigateTo("/");
+        Navigation.NavigateTo("/authentication/login");
     }
 }

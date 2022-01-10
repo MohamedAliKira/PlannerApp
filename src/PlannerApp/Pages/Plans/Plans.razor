@@ -1,7 +1,8 @@
 ﻿@page "/plans"
 @using AKSoftware.Localization.MultiLanguages.Blazor
+@attribute [Authorize]
 
-<PageTitle>Plans | PlannerApp</PageTitle>
+<PageTitle>@Language["Plans"] | PlannerApp</PageTitle>
 
 <PlannerPage Title="@Language["MyPlans"]" BreadcrumbItems="_breadcrumbItems">
     <PlanList />

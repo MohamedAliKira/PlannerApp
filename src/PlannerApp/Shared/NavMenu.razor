@@ -9,25 +9,14 @@
     <MudNavLink Href="/plans/form" Icon="@Icons.Filled.Add">@Language["AddPlan"]</MudNavLink>
     <MudNavLink Href="/about" Icon="@Icons.Filled.Help" Disabled="true">@Language["About"]</MudNavLink>
 
-    @*<MudNavGroup Title="Settings" Icon="@Icons.Filled.Settings" Expanded="true">
-            <MudNavLink Href="/users" Icon="@Icons.Filled.People" IconColor="Color.Success">Users</MudNavLink>
-            <MudNavLink Href="/security" Icon="@Icons.Filled.Security" IconColor="Color.Info">Security</MudNavLink>
-        </MudNavGroup>*@
 </MudNavMenu>
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
+   
     [Inject] public ILanguageContainerService Language { get; set; }
 
     protected override void OnInitialized()
     {
         Language.InitLocalizedComponent(this);
-    }
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+    }    
 }

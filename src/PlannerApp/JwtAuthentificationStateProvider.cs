@@ -25,7 +25,9 @@ namespace PlannerApp
                 var identity = new ClaimsIdentity(token.Claims, "Bearer");
                 var user = new ClaimsPrincipal(identity);
                 var authState = new AuthenticationState(user);
+
                 NotifyAuthenticationStateChanged(Task.FromResult(authState));
+                
                 return authState;
             }
             return new AuthenticationState(new ClaimsPrincipal()); // Empty Claims principal means no identity and the user is not logged in
