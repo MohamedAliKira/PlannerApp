@@ -1,12 +1,13 @@
-﻿<MudNavMenu Class="mud-width-full">
+﻿@using AKSoftware.Localization.MultiLanguages.Blazor
+
+<MudNavMenu Class="mud-width-full">
     <MudText Typo="Typo.h6" Class="px-4">Planner App</MudText>
     <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Developped by Med Ali Kira</MudText>
     <MudDivider Class="my-2" />
-    <MudNavLink Href="/" Icon="@Icons.Filled.Dashboard" Match="NavLinkMatch.All">Home</MudNavLink>
-    <MudNavLink Href="/plans" Icon="@Icons.Filled.Storage" Match="NavLinkMatch.All">Plans</MudNavLink>
-    <MudNavLink Href="/plans/form" Icon="@Icons.Filled.Add">Add Plan</MudNavLink>
-    <MudNavLink Href="/openitems" Icon="@Icons.Filled.Receipt" Disabled="true">Not Done Items</MudNavLink>
-    <MudNavLink Href="/about" Icon="@Icons.Filled.Help" Disabled="true">About</MudNavLink>
+    <MudNavLink Href="/" Icon="@Icons.Filled.Dashboard" Match="NavLinkMatch.All">@Language["Home"]</MudNavLink>
+    <MudNavLink Href="/plans" Icon="@Icons.Filled.Storage" Match="NavLinkMatch.All">@Language["Plans"]</MudNavLink>
+    <MudNavLink Href="/plans/form" Icon="@Icons.Filled.Add">@Language["AddPlan"]</MudNavLink>
+    <MudNavLink Href="/about" Icon="@Icons.Filled.Help" Disabled="true">@Language["About"]</MudNavLink>
 
     @*<MudNavGroup Title="Settings" Icon="@Icons.Filled.Settings" Expanded="true">
             <MudNavLink Href="/users" Icon="@Icons.Filled.People" IconColor="Color.Success">Users</MudNavLink>
@@ -19,6 +20,12 @@
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    [Inject] public ILanguageContainerService Language { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Language.InitLocalizedComponent(this);
+    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;

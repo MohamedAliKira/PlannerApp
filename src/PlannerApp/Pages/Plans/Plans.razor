@@ -1,7 +1,17 @@
 ﻿@page "/plans"
+@using AKSoftware.Localization.MultiLanguages.Blazor
 
 <PageTitle>Plans | PlannerApp</PageTitle>
 
-<PlannerPage Title="My Plans" BreadcrumbItems="_breadcrumbItems">
+<PlannerPage Title="@Language["MyPlans"]" BreadcrumbItems="_breadcrumbItems">
     <PlanList />
 </PlannerPage>
+
+
+@code {
+    [Inject] public ILanguageContainerService Language { get; set; }
+    protected override void OnInitialized()
+    {
+        Language.InitLocalizedComponent(this);
+    }
+}

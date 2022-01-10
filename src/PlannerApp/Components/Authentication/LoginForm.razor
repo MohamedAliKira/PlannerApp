@@ -6,12 +6,12 @@
     <MudCard>
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Typo="Typo.h6">Welcome to Planner App v2.0</MudText>
+                <MudText Typo="Typo.h6">@Language["WelcomeTo"] Planner App v2.0</MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <MudTextField Label="Email" HelperText="Required" @bind-Value="@_model.Email" />
-            <MudTextField InputType="InputType.Password" Label="Password" HelperText="Required" @bind-Value="@_model.Password" />
+            <MudTextField Label="@Language["Email"]" HelperText="@Language["Required"]" @bind-Value="@_model.Email" />
+            <MudTextField InputType="InputType.Password" Label="@Language["Password"]" HelperText="@Language["Required"]" @bind-Value="@_model.Password" />
             <br />
             <ValidationSummary />
             @if (!string.IsNullOrWhiteSpace(_errorMessage))
@@ -31,16 +31,16 @@
                 @if (_isBusy)
                 {
                     <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-                    <MudText Class="ms-2">Processing</MudText>
+                    @*<MudText Class="ms-2">Processing</MudText>*@
                 }
                 else
                 {
-                    <MudText>Login</MudText>
+                    <MudText>@Language["Login"]</MudText>
                 }
                 
             </MudButton>
             <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Class="ml-1" 
-                       OnClick="RedirectToRegister" Disabled="_isBusy">Create Account</MudButton>
+                       OnClick="RedirectToRegister" Disabled="_isBusy">@Language["Register"]</MudButton>
         </MudCardActions>
     </MudCard>
 

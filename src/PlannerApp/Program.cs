@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
 using PlannerApp.Client.Services;
 using PlannerApp;
-
+using AKSoftware.Localization.MultiLanguages;
+using System.Reflection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -23,6 +24,7 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, JwtAuthentificationStateProvider>();
 builder.Services.AddHttpClientServices();
+builder.Services.AddLanguageContainer(Assembly.GetExecutingAssembly());
 
 await builder.Build().RunAsync();
 

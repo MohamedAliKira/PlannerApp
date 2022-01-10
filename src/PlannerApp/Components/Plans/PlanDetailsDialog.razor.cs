@@ -4,6 +4,8 @@ using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Shared.Models;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Shared;
+using AKSoftware.Localization.MultiLanguages;
+using AKSoftware.Localization.MultiLanguages.Blazor;
 
 namespace PlannerApp.Components
 {
@@ -13,6 +15,7 @@ namespace PlannerApp.Components
         [Inject] public IPlansService PlansService { get; set; }
         [Parameter] public string PlanId { get; set; }
         [CascadingParameter] public Error Error { get; set; }
+        [Inject] public ILanguageContainerService Language { get; set; }
 
         private PlanDetail _plan;
         private bool _isBusy;
@@ -33,6 +36,7 @@ namespace PlannerApp.Components
 
         protected override async Task OnInitializedAsync()
         {
+            Language.InitLocalizedComponent(this);
             await FetchPlanAsync();
         }
         private async Task FetchPlanAsync()

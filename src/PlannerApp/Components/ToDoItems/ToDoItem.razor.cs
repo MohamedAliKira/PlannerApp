@@ -3,6 +3,8 @@ using PlannerApp.Shared.Models;
 using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Shared;
+using AKSoftware.Localization.MultiLanguages;
+using AKSoftware.Localization.MultiLanguages.Blazor;
 
 namespace PlannerApp.Components
 {
@@ -13,6 +15,7 @@ namespace PlannerApp.Components
         [Parameter] public EventCallback<ToDoItemDetail> OnItemDeleted { get; set; }
         [Parameter] public EventCallback<ToDoItemDetail> OnItemEdited { get; set; }
         [CascadingParameter] public Error Error { get; set; }
+        [Inject] public ILanguageContainerService Language { get; set; }
 
         private bool _isChecked = true;
         private bool _isBusy = false;
@@ -22,6 +25,7 @@ namespace PlannerApp.Components
         private string _descriptionStyle => $"cursor:pointer; {(_isChecked ? "text-decoration:line-through" : "")}";
         protected override void OnInitialized()
         {
+            Language.InitLocalizedComponent(this);
             _isChecked = Item.IsDone;
         }
         private void ToggleEditMode(bool isCancel)
@@ -66,7 +70,7 @@ namespace PlannerApp.Components
             {
                 if (string.IsNullOrWhiteSpace(_description))
                 {
-                    _errorMessage = "Description is Required";
+                    _errorMessage = Language["DescriptionRequired"];
                     return;
                 }
                 //Call the API to add the item

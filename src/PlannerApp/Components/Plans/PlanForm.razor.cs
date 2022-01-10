@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AKSoftware.Localization.MultiLanguages;
+using AKSoftware.Localization.MultiLanguages.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Client.Services.Interfaces;
@@ -18,6 +20,7 @@ namespace PlannerApp.Components
         [Inject] public NavigationManager Navigation { get; set; }
         [Parameter] public string Id { get; set; }
         [CascadingParameter] public Error Error { get; set; }
+        [Inject] public ILanguageContainerService Language { get; set; }
 
         private bool _isEditMode => Id != null;
         private PlanDetail _model = new();
@@ -28,6 +31,7 @@ namespace PlannerApp.Components
 
         protected override async Task OnInitializedAsync()
         {
+            Language.InitLocalizedComponent(this);
             if (_isEditMode)
                 await FetchPlanByIdAsync();
         }
@@ -88,14 +92,14 @@ namespace PlannerApp.Components
             {
                 if (file.Size > 2097152)
                 {
-                    _errorMessage = "The file must be equal or less than 2 MB";
+                    _errorMessage = Language["FileSizeLimitError"];
                     return;
                 }
                 string[] allowedExtension = new[] { ".jpg", ".png", ".bmp", ".svg" };
                 string extension = Path.GetExtension(file.Name).ToLower();
                 if (!allowedExtension.Contains(extension))
                 {
-                    _errorMessage = "Please choose a valid image file";
+                    _errorMessage = Language["InvalidImageFile"];
                     return;
                 }
                 using (var stream = file.OpenReadStream(2097152))

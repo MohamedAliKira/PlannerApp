@@ -1,27 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.JSInterop;
-using PlannerApp;
 using PlannerApp.Shared;
-using PlannerApp.Components;
-using MudBlazor;
-using Blazored.FluentValidation;
-using PlannerApp.Pages.Authentication;
 using PlannerApp.Client.Services.Interfaces;
 using PlannerApp.Client.Services.Exceptions;
 using PlannerApp.Shared.Models;
+using AKSoftware.Localization.MultiLanguages;
+using AKSoftware.Localization.MultiLanguages.Blazor;
 
 namespace PlannerApp.Components
 {
@@ -31,10 +14,15 @@ namespace PlannerApp.Components
         [Parameter] public string PlanId { get; set; }
         [Parameter] public EventCallback<ToDoItemDetail> OnToDoItemAdded { get; set; }
         [CascadingParameter] public Error Error { get; set; }
+        [Inject] public ILanguageContainerService Language { get; set; }
         private string _description { get; set; }
         private bool _isBusy = false;
         private string _errorMessage = string.Empty;
 
+        protected override void OnInitialized()
+        {
+            Language.InitLocalizedComponent(this);
+        }
         private async Task AddToDoItemAsync()
         {            
             _errorMessage = string.Empty;
@@ -42,7 +30,7 @@ namespace PlannerApp.Components
             {
                 if(string.IsNullOrWhiteSpace(_description))
                 {
-                    _errorMessage = "Description is Required";
+                    _errorMessage = Language["DescriptionRequired"];
                     return;
                 }
                 //Call the API to add the item

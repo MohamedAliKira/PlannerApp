@@ -1,4 +1,6 @@
 ﻿using AKSoftware.Blazor.Utilities;
+using AKSoftware.Localization.MultiLanguages;
+using AKSoftware.Localization.MultiLanguages.Blazor;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PlannerApp.Client.Services.Interfaces;
@@ -15,12 +17,15 @@ namespace PlannerApp.Components
         [Parameter] public EventCallback<PlanSummary> OnEditClicked { get; set; }
         [Parameter] public EventCallback<PlanSummary> OnDeleteClicked { get; set; }
         [CascadingParameter] public Error Error { get; set; }
+        [Inject] public ILanguageContainerService Language { get; set; }
 
         private string _query = string.Empty;
         private MudTable<PlanSummary> _table;
 
         protected override void OnInitialized()
         {
+            Language.InitLocalizedComponent(this);
+
             MessagingCenter.Subscribe<PlanList, PlanSummary>(this, "plan_deleted", async (sender, args) =>
               {
                   await _table.ReloadServerData();

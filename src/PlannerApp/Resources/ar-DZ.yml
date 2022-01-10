@@ -1,0 +1,35 @@
+GeneralError: حدث خطأ ما!
+Home: وطن
+Plans: الخطط
+AddPlan: إضافة خطة
+About: عن
+WelcomeTo: مرحبا بكم في
+Email: البريد الإلكتروني
+Required: مطلوب
+Password: شعار
+ConfirmPassword: تأكيد كلمة المرور
+Login: تسجيل الدخول
+Register: إنشاء حساب
+FirstName: الاسم الأول
+LastName: اسم العائلة
+Cancel: إلغاء الأمر
+Close: غلق
+PlanDetails: تفاصيل الخطة
+Title: عنوان
+Description: وصف
+LoadPicture: تحميل صورة
+Save: أنقذ
+FileSizeLimitError: يجب أن يكون الملف مساويا أو أقل من 2 ميجابايت
+InvalidImageFile: الرجاء اختيار ملف صورة صالح
+Cover: غطاء
+Actions: الاجراءات
+NewItemDescription: وصف صنف جديد
+NewItemPlaceholder: الذهاب إلى صالة الألعاب الرياضية
+NewPlanTitle: إنشاء خطة جديدة
+Optional: اختياري
+DescriptionRequired: الوصف مطلوب
+Welcome: أهلًا وسهلًا
+Logout: تسجيل الخروج
+Form: شكل
+PlanFormTitle: إنشاء/تحرير الخطة
+MyPlans: خططي

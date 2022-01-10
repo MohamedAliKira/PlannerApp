@@ -3,26 +3,32 @@
 @inject NavigationManager Navigation
 
 @using System.Security.Claims
+@using AKSoftware.Localization.MultiLanguages.Blazor
 
 <AuthorizeView>
     <Authorized>
         <MudMenu Icon="@Icons.Material.Filled.Person" Color="Color.Inherit"
                  Direction="Direction.Right" OffsetY="true">
             <MudMenuItem>
-                Welcome @context.User.FindFirst(ClaimTypes.GivenName).Value @context.User.FindFirst(ClaimTypes.Surname).Value !
+                @Language["Welcome"] @context.User.FindFirst(ClaimTypes.GivenName).Value @context.User.FindFirst(ClaimTypes.Surname).Value !
             </MudMenuItem>
-            <MudMenuItem OnClick="LogOutAsync">Log out</MudMenuItem>
-
+            <MudMenuItem OnClick="LogOutAsync">@Language["Logout"]</MudMenuItem>
         </MudMenu>
     </Authorized>
     @*<NotAuthorized>
         <MudButton Variant="Variant.Outlined" Color="Color.Info"
-                   StartIcon="@Icons.Material.Filled.Login" OnClick='() => Navigation.NavigateTo("/authentication/login")'>Login</MudButton>
-    </NotAuthorized>*@
+        StartIcon="@Icons.Material.Filled.Login" OnClick='() => Navigation.NavigateTo("/authentication/login")'>Login</MudButton>
+        </NotAuthorized>*@
 </AuthorizeView>
 
 
 @code {
+    [Inject] public ILanguageContainerService Language { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Language.InitLocalizedComponent(this);
+    }
 
     private async Task LogOutAsync()
     {
