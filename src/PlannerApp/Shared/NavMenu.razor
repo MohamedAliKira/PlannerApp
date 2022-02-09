@@ -18,5 +18,6 @@
     protected override void OnInitialized()
     {
         Language.InitLocalizedComponent(this);
+        Console.WriteLine($"OnInitialized for NavMenu : {Language.CurrentCulture}");
     }    
 }
